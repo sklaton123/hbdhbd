@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>38th Birthday: Special Strategic Report</title>
+    <title>38th Birthday: Strategic Asset Report</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -12,12 +12,12 @@
         body { background-color: var(--dark-bg); color: #fff; overflow: hidden; }
 
         .bg-glow { position: fixed; width: 600px; height: 600px; background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%); border-radius: 50%; z-index: -1; filter: blur(80px); }
-        .page { position: fixed; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; transition: 0.6s ease; opacity: 0; }
+        .page { position: fixed; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 25px; transition: 0.6s ease; opacity: 0; }
         .page.active { display: flex; opacity: 1; }
 
-        .glass-card { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 30px; padding: 40px; width: 100%; max-width: 900px; text-align: center; box-shadow: 0 30px 60px rgba(0,0,0,0.5); position: relative; }
+        .glass-card { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 30px; padding: 40px; width: 100%; max-width: 850px; text-align: center; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
         
-        /* [수정] 타이틀 팡팡 글로우 효과 */
+        /* 타이틀 팡팡 글로우 효과 */
         .glow-title { 
             font-family: 'Playfair Display', serif; 
             color: var(--gold); 
@@ -31,38 +31,22 @@
         .editable { cursor: pointer; transition: 0.3s; padding: 2px 5px; border-radius: 4px; }
         .editable:hover { outline: 1px dashed var(--gold); background: rgba(212, 175, 55, 0.1); }
 
-        /* [수정] 그래프: 2026년 확실한 계단식 상승 (2025보다 높게) */
+        /* [핵심] 그래프: 2026년 확실한 우상향 돌파 */
         .chart-container { width: 100%; height: 280px; display: flex; align-items: flex-end; gap: 15px; margin: 30px 0; padding: 0 20px; border-bottom: 2px solid var(--border); position: relative; }
         .bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 10px; z-index: 2; height: 100%; justify-content: flex-end; }
         .bar { width: 100%; background: linear-gradient(to top, var(--gold), #fff); border-radius: 5px 5px 0 0; transition: height 1.5s cubic-bezier(0.17, 0.67, 0.83, 0.67); height: 0; }
         .year-label { font-size: 14px; color: var(--gold); font-weight: bold; }
 
-        /* [수정] 사진: 양옆 빈공간 없이 꽉 채우기 */
-        .photo-area { 
-            width: 100%; 
-            height: 450px; 
-            border: 1px solid var(--border); 
-            border-radius: 20px; 
-            overflow: hidden; 
-            margin-bottom: 20px; 
-            cursor: pointer; 
-            background: #000; 
-        }
-        .photo-area img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; /* 양옆 여백 없이 꽉 채움 */
-            object-position: center top; 
-            display: block; 
-        }
+        /* 사진: 양옆 빈공간 없이 꽉 채우기 */
+        .photo-area { width: 100%; height: 450px; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; margin-bottom: 20px; cursor: pointer; background: #000; }
+        .photo-area img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
         /* 룰렛 디자인 및 텍스트 */
         .wheel-wrap { position: relative; width: 300px; height: 300px; margin: 0 auto 20px; }
         #canvas { width: 100%; height: 100%; border-radius: 50%; border: 6px solid var(--gold); transform: rotate(-90deg); }
         .pin { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 25px solid var(--gold); z-index: 10; }
-        .result-container { margin-top: 20px; min-height: 60px; }
-        #win-txt { color: var(--gold); font-size: 24px; font-weight: bold; margin-bottom: 5px; }
-        #alert-text { color: #ff4d4d; font-size: 16px; font-weight: bold; opacity: 0; transition: 0.5s; }
+        #win-txt { color: var(--gold); font-size: 24px; font-weight: bold; margin-top: 20px; min-height: 35px; }
+        #alert-text { color: #ff4d4d; font-size: 16px; font-weight: bold; opacity: 0; transition: 0.5s; margin-top: 5px; }
 
         /* 내비게이션 */
         .nav-bar { position: fixed; bottom: 40px; display: flex; gap: 20px; z-index: 100; }
@@ -86,7 +70,7 @@
     <!-- PAGE 1: 카운트다운 -->
     <div class="page active" id="page-1"><div id="timer">3</div></div>
 
-    <!-- PAGE 2: 그래프 (수정됨: 2026년 확실한 상승) -->
+    <!-- PAGE 2: 그래프 (2026년을 2025년보다 월등히 높게 설정) -->
     <div class="page" id="page-2">
         <div class="glass-card">
             <h1 class="glow-title editable" contenteditable="true" style="font-size: 36px; margin-bottom: 10px;">압도적 가치의 행복 우량주</h1>
@@ -96,7 +80,7 @@
                 <div class="bar-wrap"><div class="bar" data-h="55%"></div><div class="year-label">2023</div></div>
                 <div class="bar-wrap"><div class="bar" data-h="75%"></div><div class="year-label">2024</div></div>
                 <div class="bar-wrap"><div class="bar" data-h="90%"></div><div class="year-label">2025</div></div>
-                <!-- 2026년을 115%로 설정하여 차트 상단을 뚫는 시각적 효과 -->
+                <!-- 2026년을 115%로 설정하여 2025년보다 확실히 높게 표현 -->
                 <div class="bar-wrap"><div class="bar" style="background: linear-gradient(to top, var(--gold), #fff);" data-h="115%"></div><div class="year-label">2026</div></div>
             </div>
             <p class="editable" contenteditable="true" style="line-height: 2; font-size: 18px;">
@@ -128,14 +112,14 @@
         </div>
     </div>
 
-    <!-- PAGE 4: 사진 (수정됨: 꽉 차게) -->
+    <!-- PAGE 4: 사진 -->
     <div class="page" id="page-4">
         <div class="glass-card">
             <h2 class="glow-title editable" contenteditable="true" style="margin-bottom: 25px; font-size: 28px;">The Most Beautiful Asset</h2>
             <div class="photo-area" onclick="document.getElementById('imgIn').click()">
                 <img id="viewImg" src="https://via.placeholder.com/1200x800/111/d4af37?text=Click+to+Add+Photo">
             </div>
-            <div class="editable" contenteditable="true" style="font-size: 16px; line-height: 1.8; color: #eee;">
+            <div class="editable" contenteditable="true" style="font-size: 16px; line-height: 1.8; color: #eee; text-align: center;">
                 "38세, 당신의 가장 아름다운 순간을 영원히 기록합니다."<br>
                 사랑하는 여보, 38번째 생일을 정말 축하해. 매일 육아와 일상에 고생이 많은데,<br>
                 오늘 하루만큼은 근심 걱정 다 잊고 제일 행복한 주인공이 됐으면 좋겠어.<br>
@@ -144,7 +128,7 @@
         </div>
     </div>
 
-    <!-- PAGE 5: 룰렛 (수정됨: 기존 형식 복구) -->
+    <!-- PAGE 5: 룰렛 -->
     <div class="page" id="page-5">
         <div class="glass-card">
             <h2 class="glow-title editable" contenteditable="true" style="margin-bottom: 30px; font-size: 32px;">Benefit Distribution</h2>
@@ -153,10 +137,8 @@
                 <canvas id="canvas" width="300" height="300"></canvas>
             </div>
             <button class="btn" id="spin" style="width: 100%; border-width: 2px;">SPIN FOR REWARD</button>
-            <div class="result-container">
-                <p id="win-txt"></p>
-                <p id="alert-text">당첨을 축하합니다! 본 혜택은 금일 내 소진 해야 합니다</p>
-            </div>
+            <p id="win-txt"></p>
+            <p id="alert-text">당첨을 축하합니다! 본 혜택은 금일 내 소진 해야 합니다</p>
         </div>
     </div>
 
@@ -206,11 +188,15 @@
 
             document.getElementById('next-btn').style.display = (curr === total) ? 'none' : 'block';
 
+            // [확실한 수정] 그래프 애니메이션 로직
             const bars = document.querySelectorAll('.bar');
             if(curr === 2) {
                 setTimeout(() => {
-                    bars.forEach(b => { b.style.height = b.getAttribute('data-h'); });
-                }, 150);
+                    bars.forEach(b => { 
+                        const h = b.getAttribute('data-h');
+                        b.style.height = h; 
+                    });
+                }, 100);
             } else {
                 bars.forEach(b => b.style.height = '0');
             }
