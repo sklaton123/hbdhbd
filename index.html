@@ -12,34 +12,37 @@
         body { background-color: var(--dark-bg); color: #fff; overflow: hidden; }
 
         .bg-glow { position: fixed; width: 600px; height: 600px; background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%); border-radius: 50%; z-index: -1; filter: blur(80px); }
-        .page { position: fixed; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 25px; transition: 0.6s ease; opacity: 0; }
+        .page { position: fixed; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; transition: 0.6s ease; opacity: 0; }
         .page.active { display: flex; opacity: 1; }
 
         .glass-card { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 30px; padding: 40px; width: 100%; max-width: 850px; text-align: center; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
         
+        /* [타이틀 효과] 흐려졌다 밝아졌다 + 팡팡 터지는 글로우 */
         .glow-title { 
             font-family: 'Playfair Display', serif; 
             color: var(--gold); 
             animation: popGlow 3s infinite ease-in-out;
+            letter-spacing: 2px;
         }
         @keyframes popGlow {
-            0%, 100% { opacity: 0.7; transform: scale(0.98); text-shadow: 0 0 5px rgba(212, 175, 55, 0.2); }
+            0%, 100% { opacity: 0.6; transform: scale(0.97); text-shadow: 0 0 5px rgba(212, 175, 55, 0.2); }
             50% { opacity: 1; transform: scale(1.05); text-shadow: 0 0 25px rgba(241, 213, 146, 0.9), 0 0 10px rgba(212, 175, 55, 0.6); }
         }
 
         .editable { cursor: pointer; transition: 0.3s; padding: 2px 5px; border-radius: 4px; }
         .editable:hover { outline: 1px dashed var(--gold); background: rgba(212, 175, 55, 0.1); }
 
-        /* [그래프 수정] 2026년 확실한 계단식 돌파 */
-        .chart-container { width: 100%; height: 280px; display: flex; align-items: flex-end; gap: 15px; margin: 30px 0; padding: 0 20px; border-bottom: 2px solid var(--border); position: relative; }
+        /* [핵심 수정] 그래프: 확실한 계단식 (2025를 낮추고 2026을 최대로) */
+        .chart-container { width: 100%; height: 280px; display: flex; align-items: flex-end; gap: 15px; margin: 30px 0; padding: 0 20px; border-bottom: 2px solid var(--border); position: relative; overflow: visible; }
         .bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 10px; z-index: 2; height: 100%; justify-content: flex-end; }
-        .bar { width: 100%; background: linear-gradient(to top, var(--gold), #fff); border-radius: 5px 5px 0 0; transition: height 1.5s cubic-bezier(0.17, 0.67, 0.83, 0.67); height: 0; }
+        .bar { width: 100%; background: linear-gradient(to top, var(--gold), #fff); border-radius: 5px 5px 0 0; transition: height 1.5s cubic-bezier(0.17, 0.67, 0.83, 0.67); height: 0; box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); }
         .year-label { font-size: 14px; color: var(--gold); font-weight: bold; }
 
-        /* [사진 수정] 양옆 여백 없이 꽉 채우기 */
+        /* [사진 수정] 양옆 빈공간 없이 꽉 채우기 */
         .photo-area { width: 100%; height: 450px; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; margin-bottom: 20px; cursor: pointer; background: #000; }
         .photo-area img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
+        /* 룰렛 스타일 복구 */
         .wheel-wrap { position: relative; width: 300px; height: 300px; margin: 0 auto 20px; }
         #canvas { width: 100%; height: 100%; border-radius: 50%; border: 6px solid var(--gold); transform: rotate(-90deg); }
         .pin { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 25px solid var(--gold); z-index: 10; }
@@ -64,10 +67,8 @@
         <button id="next-btn" class="btn" onclick="move(1)">Next <i class="fa-solid fa-chevron-right"></i></button>
     </div>
 
-    <!-- PAGE 1: 카운트다운 -->
     <div class="page active" id="page-1"><div id="timer">3</div></div>
 
-    <!-- PAGE 2: 그래프 (수치 대폭 조정) -->
     <div class="page" id="page-2">
         <div class="glass-card">
             <h1 class="glow-title editable" contenteditable="true" style="font-size: 36px; margin-bottom: 10px;">압도적 가치의 행복 우량주</h1>
@@ -77,8 +78,7 @@
                 <div class="bar-wrap"><div class="bar" data-h="50%"></div><div class="year-label">2023</div></div>
                 <div class="bar-wrap"><div class="bar" data-h="70%"></div><div class="year-label">2024</div></div>
                 <div class="bar-wrap"><div class="bar" data-h="85%"></div><div class="year-label">2025</div></div>
-                <!-- 2026년을 115%로 설정하여 확실한 시각적 차이 부여 -->
-                <div class="bar-wrap"><div class="bar" style="background: linear-gradient(to top, #d4af37, #fff);" data-h="115%"></div><div class="year-label">2026</div></div>
+                <div class="bar-wrap"><div class="bar" style="background: linear-gradient(to top, var(--gold), #fff); box-shadow: 0 0 25px rgba(212,175,55,0.4);" data-h="120%"></div><div class="year-label">2026</div></div>
             </div>
             <p class="editable" contenteditable="true" style="line-height: 2; font-size: 18px;">
                 당신은 지난 <span style="color:var(--gold); font-weight:bold;">2033일</span>간 우리 가족의<br>
@@ -88,7 +88,6 @@
         </div>
     </div>
 
-    <!-- PAGE 3: 로드맵 -->
     <div class="page" id="page-3">
         <div class="glass-card">
             <h2 class="glow-title editable" contenteditable="true" style="margin-bottom: 35px; font-size: 32px;">Roadmap for happiness 2026</h2>
@@ -109,7 +108,6 @@
         </div>
     </div>
 
-    <!-- PAGE 4: 사진 (전체 채우기) -->
     <div class="page" id="page-4">
         <div class="glass-card">
             <h2 class="glow-title editable" contenteditable="true" style="margin-bottom: 25px; font-size: 28px;">The Most Beautiful Asset</h2>
@@ -125,7 +123,6 @@
         </div>
     </div>
 
-    <!-- PAGE 5: 룰렛 -->
     <div class="page" id="page-5">
         <div class="glass-card">
             <h2 class="glow-title editable" contenteditable="true" style="margin-bottom: 30px; font-size: 32px;">Benefit Distribution</h2>
@@ -139,7 +136,6 @@
         </div>
     </div>
 
-    <!-- PAGE 6: 인증서 -->
     <div class="page" id="page-6">
         <div class="glass-card" style="border: 2px solid var(--gold); background: rgba(15,15,15,0.95);">
             <h2 class="glow-title editable" contenteditable="true" style="margin-bottom: 15px; font-size: 32px;">Certificate of Happiness</h2>
@@ -185,15 +181,15 @@
 
             document.getElementById('next-btn').style.display = (curr === total) ? 'none' : 'block';
 
+            // [확실한 그래프 수정 로직]
             const bars = document.querySelectorAll('.bar');
             if(curr === 2) {
-                // 100ms 지연 후 확실한 높이 값 부여
+                // 약간의 지연 후 스타일 강제 적용
                 setTimeout(() => {
                     bars.forEach(b => { 
-                        const h = b.getAttribute('data-h');
-                        b.style.height = h; 
+                        b.style.height = b.getAttribute('data-h'); 
                     });
-                }, 100);
+                }, 150);
             } else {
                 bars.forEach(b => b.style.height = '0');
             }
